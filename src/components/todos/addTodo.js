@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,16 +9,22 @@ function AddTodo() {
 	const inputTodoHandler = (e) => {
 		setInputTodo(e.target.value);
 	};
-	const addTodoHandler = () => {
+	const addTodoHandler = async () => {
 		if (inputTodo.length > 0) {
-			dispatch(
-				addTodo({
-					text: inputTodo,
-					done: false,
-					id: new Date().getTime(),
-				})
-			);
-			setInputTodo("");
+			try {
+				let res = await axios.post(
+					"https://634a6c4376028b55ae731673.endapi.io/todos",
+					{
+						text: inputTodo,
+						done: false,
+					}
+				);
+				console.log(res.data.data);
+				dispatch(addTodo(res.data.data));
+				setInputTodo("");
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
 	return (
