@@ -19,7 +19,7 @@ function AddTodo() {
 						done: false,
 					}
 				);
-				console.log(res.data.data);
+				// console.log(res.data.data);
 				dispatch(addTodo(res.data.data));
 				setInputTodo("");
 			} catch (error) {

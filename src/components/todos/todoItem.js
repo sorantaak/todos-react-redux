@@ -5,14 +5,37 @@ import {
 	editTodo,
 } from "../../store/slices/todosSlice";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 const TodoItem = ({ todo }) => {
 	const dispatch = useDispatch();
-	const deleteTodoHandler = () => {
-		dispatch(deleteTodo(todo.id));
+
+	const deleteTodoHandler = async () => {
+		try {
+			let res = await axios.delete(
+				`https://634a6c4376028b55ae731673.endapi.io/todos/${todo.id}`
+			);
+			// console.log(res);
+			dispatch(deleteTodo(todo.id));
+		} catch (error) {
+			console.log(error);
+		}
 	};
-	const toggleTodoHandler = () => {
-		dispatch(toggleTodoDone(todo.id));
-		dispatch(editTodo({ id: todo.id, text: "new text" }));
+	const toggleTodoHandler = async () => {
+		try {
+			let res = await axios.put(
+				`https://634a6c4376028b55ae731673.endapi.io/todos/${todo.id}`,
+				{
+					...todo,
+					done: !todo.done,
+				}
+			);
+			// console.log(res);
+			dispatch(toggleTodoDone(todo.id));
+		} catch (error) {
+			console.log(error);
+		}
+		// dispatch(toggleTodoDone(todo.id));
+		// dispatch(editTodo({ id: todo.id, text: "new text" }));
 	};
 	return (
 		<div className="flex mb-4 items-center">
