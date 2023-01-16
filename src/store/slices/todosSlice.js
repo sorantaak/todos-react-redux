@@ -6,6 +6,9 @@ const todosSlice = createSlice({
 		list: [],
 	},
 	reducers: {
+		setTodos: (state, { payload }) => {
+			state.list = payload;
+		},
 		addTodo: (state, action) => {
 			state.list.push(action.payload);
 		},
@@ -34,6 +37,6 @@ const todosSlice = createSlice({
 		},
 	},
 });
-export const { addTodo, deleteTodo, toggleTodoDone, editTodo } =
+export const { addTodo, deleteTodo, toggleTodoDone, editTodo, setTodos } =
 	todosSlice.actions;
 export default todosSlice.reducer;

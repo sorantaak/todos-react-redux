@@ -2,7 +2,22 @@ import React from "react";
 import AddTodo from "./addTodo";
 import { useSelector } from "react-redux";
 import TodoItem from "./todoItem";
+import { useEffect } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setTodos } from "./../../store/slices/todosSlice";
 function TodosSection() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		getUsers();
+	}, []);
+
+	const getUsers = async () => {
+		let res = await axios.get(
+			"https://634a6c4376028b55ae731673.endapi.io/todos"
+		);
+		dispatch(setTodos(res.data.data));
+	};
 	const todos = useSelector((state) => state.todos.list);
 	console.log(todos);
 	return (
